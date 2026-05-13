@@ -1,0 +1,9 @@
+keys:
+  - &admin_tim age1az28qfxahja456lhj2hwedypc85852c0upn3achn5jw83a76uvqsxl6t9v
+  - &server_cloud age1d4ex03vqaadp5uqd6gyunxxxmqnf0mh4gyt2tgpv7tfev42q3d7q5pdaf5
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - age:
+      - *admin_tim
+      - *server_cloud

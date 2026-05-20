@@ -23,6 +23,7 @@
         ./disko-config.nix
         ./networking.nix
         ./immich.nix
+        ./nginx.nix
 
         ({ config, pkgs, lib, ... }: {
           boot.kernelPackages = pkgs.linuxPackages; 

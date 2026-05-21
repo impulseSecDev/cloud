@@ -14,7 +14,6 @@
     acceptTerms = true;
     defaults = {
       email = "placeholder@mesh.com";
-      # environmentFile is no longer strictly needed if using credentialFiles
     };
     certs = {
       "mesh.loranjennings.com" = {
@@ -34,7 +33,6 @@
     enable = true;
     virtualHosts = {
       "cloud.mesh.loranjennings.com" = {
-        # Must match the string key in security.acme.certs above
         useACMEHost = "mesh.loranjennings.com";
         forceSSL = true;
 
@@ -44,8 +42,23 @@
           proxyPass = "http://127.0.0.1:2283";
           proxyWebsockets = true;
           extraConfig = ''
-            proxy_set_header Host cloud.mesh.loranjennings.com;
+            # allow large file uploads
+            client_max_body_size 50000M;
+            
+           # disable buffering uploads to prevent OOM on reverse proxy server and make uploads twice as fast (no pause)
+           proxy_request_buffering off;
+
+            #increase body buffer size to preent limited upload speed
+            client_body_buffer_size 1024k;
+
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
+
+            location = /.well-known/immich {
+              proxy_pass http://127.0.0.1:2283;
+            }  
           '';
         };
       };

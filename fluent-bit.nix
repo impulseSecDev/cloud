@@ -62,7 +62,7 @@
 
       [INPUT]
           name systemd
-          tag  wazuh.journal
+          tag  cloud.journal
 
       [INPUT]
           name tail
@@ -71,7 +71,7 @@
 
       [INPUT]
           name              tail
-          tag               wazuhvm.suricata.eve
+          tag               cloud.suricata.eve
           path              /var/log/suricata/eve.json
           db                /var/lib/fluent-bit/suricata-eve.db
           mem_buf_limit     10MB
@@ -101,7 +101,7 @@
 
       [FILTER]
           name   lua
-          match  wazuhvm.fail2ban
+          match  cloud.fail2ban
           script /etc/fluent-bit/fail2ban-parse.lua
           call   parse_fail2ban
 
@@ -113,7 +113,7 @@
           http_user          ${config.sops.placeholder."elastic_user"}
           http_passwd        ${config.sops.placeholder."elastic_password"}
           logstash_format    On
-          logstash_prefix    wazuhvm
+          logstash_prefix    cloud
           suppress_type_name On
           buffer_size        10MB
     '';

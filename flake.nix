@@ -26,6 +26,9 @@
         ./nginx.nix
         ./fail2ban.nix
         ./wireguard.nix
+        ./suricata.nix
+        ./fluent-bit.nix
+        ./wazuh-agent.nix
 
         ({ config, pkgs, lib, ... }: {
           boot.kernelPackages = pkgs.linuxPackages; 

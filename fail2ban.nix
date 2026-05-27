@@ -1,0 +1,26 @@
+{ confing, lib, pkgs, ... }:
+{
+
+  services.fail2ban = {
+    enable = true;
+    maxretry = 5;
+    bantime = "1d";
+    bantime-increment = {
+      enable = true;
+      formula = "ban.Time * 1.5";
+      maxtime = "1w";
+      overalljails = true;
+    };
+    jails = {
+      sshd = {
+        enabled = true;
+        settings = {
+          journalmatch = "_SYSTEMD_UNIT=sshd.service";
+          bantime = "2d";
+          findtime = 600;
+          maxretry = 3;
+        };
+      };
+    };
+  };
+}

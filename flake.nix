@@ -24,6 +24,8 @@
         ./networking.nix
         ./immich.nix
         ./nginx.nix
+        ./fail2ban.nix
+        ./wireguard.nix
 
         ({ config, pkgs, lib, ... }: {
           boot.kernelPackages = pkgs.linuxPackages; 

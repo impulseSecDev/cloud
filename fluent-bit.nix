@@ -81,7 +81,7 @@
 
       [INPUT]
           name              tail
-          tag               wazuhvm.suricata.fast
+          tag               cloud.suricata.fast
           path              /var/log/suricata/fast.log
           db                /var/lib/fluent-bit/suricata-fast.db
           mem_buf_limit     5MB

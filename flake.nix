@@ -6,7 +6,7 @@
 
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     disko.url = "github:nix-community/disko";
@@ -89,7 +89,6 @@
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINw1yOJY+eSj4TWgNUbM2QNR49PWyRp+6QkT3LNboWvM raspberry pi-cloud-key" # Your public key
               ];
               hostKeys = [ "/etc/secrets/initrd_ssh_host_ed25519_key" ];
-              shell = "/bin/cryptsetup-askpass";
             };
           };
 

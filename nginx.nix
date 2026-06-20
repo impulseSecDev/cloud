@@ -42,11 +42,14 @@
           proxyPass = "http://127.0.0.1:2283";
           proxyWebsockets = true;
           extraConfig = ''
+            proxy_connect_timeout 60s;   # Time to establish connection
+            proxy_send_timeout 60s;     # Time waiting for client upload chunk
+            proxy_read_timeout 60s;     # Time waiting for Immich response/stream data
             # allow large file uploads
             client_max_body_size 50000M;
             
-           # disable buffering uploads to prevent OOM on reverse proxy server and make uploads twice as fast (no pause)
-           proxy_request_buffering off;
+            # disable buffering uploads to prevent OOM on reverse proxy server and make uploads twice as fast (no pause)
+            proxy_request_buffering off;
 
             #increase body buffer size to preent limited upload speed
             client_body_buffer_size 1024k;
@@ -55,11 +58,11 @@
             proxy_set_header Connection "upgrade";
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
-
-            location = /.well-known/immich {
-              proxy_pass http://127.0.0.1:2283;
-            }  
           '';
+        };
+        locations."/.well-known/immich" = {
+          proxyPass = "http://127.0.0.1:2283";
+          proxyWebsockets = true;
         };
       };
     };

@@ -39,7 +39,7 @@
         volumes = [
           "/var/lib/immich/uploads:/data"
         ];
-        ports = [ "2283:2283" ];
+        ports = [ "127.0.0.1:2283:2283" ];
         dependsOn = [ "immich-redis" "immich-postgres" ];
         extraOptions = [ 
           "--health-cmd=true"

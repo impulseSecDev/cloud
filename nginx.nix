@@ -88,6 +88,38 @@
           proxyWebsockets = true;
         };
       };
+      "services.mesh.loranjennings.com" = {
+        useACMEHost = "mesh.loranjennings.com";
+        forceSSL = true;
+
+        listen = [ { addr = "100.64.0.15"; port = 443; ssl = true; } ];
+
+        locations."/" = {
+          proxyPass = "https://127.0.0.1:64448";
+          proxyWebsockets = true;
+          extraConfig = ''
+            # The following configurations must be configured when proxying to Kasm Workspaces
+
+            # Host and X headers
+            proxy_set_header        Host $host;
+            proxy_set_header        X-Real-IP $remote_addr;
+            proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header        X-Forwarded-Proto $scheme;
+            # Should match the listening port of this proxy
+            proxy_set_header        X-Forwarded-Port 443;
+
+            # Connectivity Options
+            proxy_read_timeout      1800s;
+            proxy_send_timeout      1800s;
+            proxy_connect_timeout   1800s;
+            proxy_buffering         off;
+            proxy_ssl_server_name on;
+
+            # Allow large requests to support file uploads to sessions
+            client_max_body_size 10M;
+          '';
+        };
+      };
     };
   };
 

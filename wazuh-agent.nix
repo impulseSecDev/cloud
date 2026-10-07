@@ -29,7 +29,9 @@
         environmentFiles = [ config.sops.templates."wazuh-agent.env".path ];
 
         volumes = [
-          "/var/lib/wazuh-agent/etc:/var/ossec/etc"
+          "wazuh-agent-etc:/var/ossec/etc"
+          "wazuh-agent-queue:/var/ossec/queue"
+          "wazuh-agent-logs:/var/ossec/logs"
         ];
 
         extraOptions = [

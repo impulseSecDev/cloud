@@ -28,6 +28,10 @@
 
         environmentFiles = [ config.sops.templates."wazuh-agent.env".path ];
 
+        volumes = [
+          "/var/lib/wazuh-agent/etc:/var/ossec/etc"
+        ];
+
         extraOptions = [
           "--network=host"
           "--cap-add=SYS_PTRACE"

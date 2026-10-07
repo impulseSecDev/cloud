@@ -30,7 +30,6 @@
         ./disko-config.nix
         ./networking.nix
         ./immich.nix
-        ./kasm.nix
         ./nginx.nix
         ./fail2ban.nix
         ./wireguard.nix

@@ -9,7 +9,7 @@
 
   sops.templates."nextcloud_admin_pass_file.env" = {
     content = ''
-      DB_PASSWORD=${config.sops.placeholder."nextcloud_admin_password"}
+      ${config.sops.placeholder."nextcloud_admin_password"}
     '';
     path = "/run/secrets/nextcloud_admin_pass_file.env";
     mode = "0440";
@@ -19,9 +19,9 @@
 
   sops.templates."nextcloud_db_pass_file.env" = {
     content = ''
-      DB_PASSWORD=${config.sops.placeholder."nextcloud_db_password"}
+      ${config.sops.placeholder."nextcloud_db_password"}
     '';
-    path = "/run/secrets/nextcloud_admin_pass_file.env";
+    path = "/run/secrets/nextcloud_db_pass_file.env";
     mode = "0440";
     owner = "root";
     group = "root";
@@ -33,10 +33,10 @@
     secrets = 
     config = {
       adminuser = "nextcloudadmin";
-      adminpassFile = ;
+      adminpassFile = "${config.sops.templates."nextcloud_admin_pass_file.env".path}";
       dbtype = "pgsql";
       dbuser = "nextcloud";
-      dbpassFile =
+      dbpassFile = "${config.sops.templates."nextcloud_db_pass_file.env".path}";
   };
 }
 

@@ -93,10 +93,6 @@
         useACMEHost = "mesh.loranjennings.com";
         forceSSL = true;
         listen = [ { addr = "100.64.0.15"; port = 443; ssl = true; } ];
-        locations."/" = {
-          proxyPass = "https://127.0.0.1:11000";
-          proxyWebsockets = true;
-        };
       };
     };
   };

@@ -1,9 +1,14 @@
 { config, pkgs, ... }: {
+  sops.secrets."nextcloud_admin_password" = {};
 
-  sops.secrets."nextcloud_admin_password" = {
+  sops.templates."nextcloud_admin_pass_file.env" = {
+    content = ''
+      ${config.sops.placeholder."nextcloud_admin_password"}
+    '';
+    path = "/run/secrets/nextcloud_admin_pass_file.env";
+    mode = "0440";
     owner = "nextcloud";
     group = "nextcloud";
-    mode = "0400";
   };
 
   services.nextcloud = {
@@ -11,14 +16,17 @@
     package = pkgs.nextcloud35;
     https = true;
     hostName = "drive.mesh.loranjennings.com";
-
-    # Enables PostgreSQL and creates the database and role over the unix socket
     database.createLocally = true;
-
     config = {
       adminuser = "nextcloudadmin";
-      adminpassFile = config.sops.secrets."nextcloud_admin_password".path;
+      adminpassFile = config.sops.templates."nextcloud_admin_pass_file.env".path;
       dbtype = "pgsql";
+    };
+    settings = {
+      maintenance_window_start = 1;
+      default_phone_region = "US";
+      log_type = "systemd";
+      serverid = 0;
     };
   };
 }

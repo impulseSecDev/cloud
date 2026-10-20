@@ -37,6 +37,7 @@
         ./fluent-bit.nix
         ./wazuh-agent.nix
         ./nextcloud.nix
+        ./onlyoffice.nix
 
         ({ config, pkgs, lib, ... }: {
           boot.kernelPackages = pkgs.linuxPackages; 

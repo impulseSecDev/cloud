@@ -92,15 +92,37 @@
       "drive.mesh.loranjennings.com" = {
         useACMEHost = "mesh.loranjennings.com";
         forceSSL = true;
-        listen = [ { addr = "100.64.0.15"; port = 443; ssl = true; } ];
+        listen = [ 
+          { addr = "100.64.0.15"; port = 443; ssl = true; }
+          { addr = "127.0.0.1"; port = 443; ssl = true; }
+        ];
+      };
+
+      "nextcloud-internal" = {
+        serverName = "172.17.0.1";
+        listen = [ { addr = "172.17.0.1"; port = 80; } ];
+        forceSSL = false;
+        enableACME = false;
+
+        root = config.services.nginx.virtualHosts."drive.mesh.loranjennings.com".root;
+        locations = config.services.nginx.virtualHosts."drive.mesh.loranjennings.com".locations;
+        extraConfig = config.services.nginx.virtualHosts."drive.mesh.loranjennings.com".extraConfig;
       };
 
       "office.mesh.loranjennings.com" = {
         useACMEHost = "mesh.loranjennings.com";
         forceSSL = true;
-        listen = [ { addr = "100.64.0.15"; port = 443; ssl = true; } ];
+        listen = [ 
+          { addr = "100.64.0.15"; port = 443; ssl = true; }
+          { addr = "127.0.0.1"; port = 443; ssl = true; }
+        ];
         locations."/" = {
           proxyPass = "http://127.0.0.1:42995";
+          proxyWebsockets = true; 
+          extraConfig = ''
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-Host $http_host;
+          '';
         };
       };
     };
@@ -108,4 +130,6 @@
 
   # Open the port specifically on the Tailscale interface
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [ 443 ];
+  networking.firewall.interfaces."lo".allowedTCPPorts = [ 443 ];
+  networking.firewall.interfaces."docker0".allowedTCPPorts = [ 80 ];
 }

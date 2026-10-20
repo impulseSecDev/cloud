@@ -11,6 +11,8 @@
       JWT_SECRET=${config.sops.placeholder."jwt_secret"}
       JWT_HEADER=Authorization
       JWT_IN_BODY=true
+      ALLOW_PRIVATE_IP_ADDRESS=true
+      ALLOW_META_IP_ADDRESS=true
     '';
     path = "/run/secrets/onlyoffice.env";
     mode = "0600";
@@ -35,6 +37,9 @@
           "/usr/share/fonts"
         ];
         ports = [ "127.0.0.1:42995:80" ];
+        # extraOptions = [
+        #     "--no-healthcheck"
+        #   ];
       };
     };
   };

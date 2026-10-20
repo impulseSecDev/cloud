@@ -27,6 +27,9 @@
       default_phone_region = "US";
       log_type = "systemd";
       serverid = 0;
+      trusted_domains = [
+         "172.17.0.1" #onlyoffice container
+      ];
     };
   };
 }

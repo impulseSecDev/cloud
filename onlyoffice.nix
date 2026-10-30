@@ -36,7 +36,7 @@
           "/var/www/onlyoffice/documentserver-example/public/files"
           "/usr/share/fonts"
         ];
-        ports = [ "127.0.0.1:42995:80" ];
+        ports = [ "127.2.0.1:42995:80" ];
         # extraOptions = [
         #     "--no-healthcheck"
         #   ];

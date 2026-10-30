@@ -62,7 +62,7 @@
         listen = [ { addr = "100.64.0.15"; port = 443; ssl = true; } ];
 
         locations."/" = {
-          proxyPass = "http://127.0.0.1:2283";
+          proxyPass = "http://127.1.0.1:2283";
           proxyWebsockets = true;
           extraConfig = ''
             proxy_connect_timeout 60s;   # Time to establish connection
@@ -84,7 +84,7 @@
           '';
         };
         locations."/.well-known/immich" = {
-          proxyPass = "http://127.0.0.1:2283";
+          proxyPass = "http://127.1.0.1:2283";
           proxyWebsockets = true;
         };
       };
@@ -117,7 +117,7 @@
           { addr = "127.0.0.1"; port = 443; ssl = true; }
         ];
         locations."/" = {
-          proxyPass = "http://127.0.0.1:42995";
+          proxyPass = "http://127.2.0.1:42995";
           proxyWebsockets = true; 
           extraConfig = ''
             proxy_set_header X-Forwarded-Proto $scheme;

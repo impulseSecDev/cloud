@@ -11,7 +11,7 @@
    };
 
   systemd.services.init-immich-network = {
-    description = "Create Docker network for Immich isolation";
+    description = "Docker network for Immich isolation";
     after = [ "network.target" "docker.service" ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig.Type = "oneshot";
